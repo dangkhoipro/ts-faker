@@ -1,6 +1,9 @@
 {
   "name": "ts-faker",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "repository": "https://github.com/SirwanAfifi/ts-faker",
   "author": "Sirwan Afifi <sir1afifi@gmail.com>",
   "license": "MIT",
