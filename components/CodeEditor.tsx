@@ -8,7 +8,7 @@ interface MonacoProps {
   width?: number | string;
   height?: number | string;
   options?: any;
-  onChange?: (value: string) => void;
+  onChange?: (value?: string) => void;
 }
 
 export const SAMPLE_CODE = `/*

@@ -1,7 +1,10 @@
 import Head from "next/head";
+import { AppProps } from "next/app";
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+interface CustomPageProps {}
+
+function MyApp({ Component, pageProps }: AppProps<CustomPageProps>) {
   return (
     <>
       <Head>

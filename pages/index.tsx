@@ -58,7 +58,12 @@ export default function Home() {
   return (
     <div className="overflow-hidden flex flex-row">
       <div className="w-2/5">
-        <TextEditor theme="vs-dark" value={value} height={"100vh"} onChange={setValue} />
+        <TextEditor
+          theme="vs-dark"
+          value={value}
+          height={"100vh"}
+          onChange={(value) => setValue(value ?? "")}
+        />
       </div>
       <div className="w-1/2 h-screen flex-1 overflow-y-auto">
         <SocialButtons />
@@ -117,7 +122,7 @@ export default function Home() {
                       <tr key={i} className="even:bg-gray-100">
                         {Object.values(dt).map((k, kIndex) => (
                           <td key={kIndex} className="px-6 py-4 whitespace-nowrap text-sm">
-                            <span className="">{k}</span>
+                            <span className="">{`${k}`}</span>
                           </td>
                         ))}
                       </tr>
