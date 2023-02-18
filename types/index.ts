@@ -15,23 +15,28 @@ export interface GeneratedType {
 
 export type DataItem = Record<string, unknown>;
 
-export enum MemberOtherData {
+export enum ECustomData {
   USER_NAME = "USER_NAME",
   FIRST_NAME = "FIRST_NAME",
   FULL_NAME = "FULL_NAME",
   LAST_NAME = "LAST_NAME",
   PRICE = "PRICE",
-  DESCRIPTION = "DESCRIPTION",
+  EMAIL = "EMAIL",
+  URL = "URL",
+  SENTENCE = "SENTENCE",
 }
 
 type DataType = {
+  [x: string]: string;
   USER_NAME: string;
   FIRST_NAME: string;
   FULL_NAME: string;
   LAST_NAME: string;
   PRICE: string;
   DESCRIPTION: string;
-  [x: string]: string;
+  EMAIL: string;
+  URL: string;
+  SENTENCE: string;
 };
 
 export enum MemberType {
@@ -51,4 +56,5 @@ export enum OutputFormat {
 export const MyRegex = {
   DataType: /^DataType\[['"](?<dataType>.*)['"]\]$/,
   DynamicNumber: /^number\|(?<min>\d+)-?(?<max>\d+)?$/,
+  DynamicSentence: /^SENTENCE\|?(?<length>\d+)?$/,
 } as const;

@@ -1,14 +1,15 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ActionButton } from "@components/ActionButton";
+import { Spinner } from "@components/Spinner";
 import dynamic from "next/dynamic";
+import React, { ChangeEvent, useCallback, useState } from "react";
+import { SAMPLE_CODE } from "../components/CodeEditor";
+import { Select } from "../components/Select";
+import { SocialButtons } from "../components/SocialButtons";
+import { OPTIONS } from "../config";
 import { axios } from "../lib/axios";
 import { GeneratedType, OutputFormat } from "../types";
-import { truncate, downloadObjectAsJson, downloadObjectAsSQL, copyData } from "../utils";
-import { Select } from "../components/Select";
-import { OPTIONS } from "../config";
-import { SocialButtons } from "../components/SocialButtons";
-import { SAMPLE_CODE } from "../components/CodeEditor";
-import { Spinner } from "@components/Spinner";
-import { ActionButton } from "@components/ActionButton";
+import { copyData, downloadObjectAsJson, downloadObjectAsSQL } from "../utils";
+
 const TextEditor = dynamic(import("../components/CodeEditor"), {
   ssr: false,
 });
@@ -45,10 +46,7 @@ export default function Home() {
   const renderHeaders = useCallback(
     (data: GeneratedType["data"]) =>
       Object.keys(data[0]).map((key, index) => (
-        <th
-          key={index}
-          className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
-        >
+        <th key={index} className="px-6 py-3 text-left text-xs font-medium text-gray-500">
           {key}
         </th>
       )),
@@ -121,8 +119,11 @@ export default function Home() {
                     {res.data.map((dt, i) => (
                       <tr key={i} className="even:bg-gray-100">
                         {Object.values(dt).map((k, kIndex) => (
-                          <td key={kIndex} className="px-6 py-4 whitespace-nowrap text-sm">
-                            <span className="">{`${k}`}</span>
+                          <td
+                            key={kIndex}
+                            className="px-6 py-4 whitespace-nowrap text-sm max-w-xs truncate"
+                          >
+                            {`${k}`}
                           </td>
                         ))}
                       </tr>

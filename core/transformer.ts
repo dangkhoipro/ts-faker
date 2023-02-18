@@ -1,11 +1,5 @@
 import { SOURCE_PATH } from "../config";
-import {
-  InterfaceTypeItem,
-  InterfaceMember,
-  MemberOtherData,
-  GeneratedType,
-  MyRegex,
-} from "../types";
+import { InterfaceTypeItem, InterfaceMember, ECustomData, GeneratedType, MyRegex } from "../types";
 import { GeneratorLib } from ".";
 
 export const transform = async (fileText: string): Promise<InterfaceTypeItem[]> => {

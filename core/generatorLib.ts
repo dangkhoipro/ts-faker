@@ -1,7 +1,7 @@
 import faker from "faker";
 
 export const GeneratorLib = {
-  string: faker.datatype.string,
+  string: faker.random.words,
   text: faker.lorem.text,
   number: faker.datatype.number,
   boolean: faker.datatype.boolean,
@@ -11,6 +11,8 @@ export const GeneratorLib = {
   lastName: faker.name.lastName,
   fullName: faker.name.findName,
   price: faker.commerce.price,
-  sentence: faker.lorem.sentence,
   dynamicNumber: (option?: { min?: number; max?: number }) => faker.datatype.number(option),
+  email: faker.internet.email,
+  url: faker.internet.url,
+  sentence: (wordCount?: number) => faker.lorem.sentence(wordCount),
 };

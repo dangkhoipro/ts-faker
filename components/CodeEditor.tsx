@@ -17,8 +17,10 @@ You can use some built-in data types:
   - DataType["FIRST_NAME"]
   - DataType["LAST_NAME"]
   - DataType["PRICE"]
-  - DataType["DESCRIPTION"]
+  - DataType["URL"]
+  - DataType["EMAIL"]
   - DataType['number|1-120'] (min?-max?)
+  - DataType['SENTENCE'] (?|length)
 */
 
 interface Person {
@@ -26,7 +28,15 @@ interface Person {
   firstName: DataType['FIRST_NAME'];
   lastName: DataType['LAST_NAME'];
   age: DataType['number|1-120'];
-  bio: DataType['DESCRIPTION'];
+  dob: Date;
+  profileUrl: DataType['URL'];
+  email: DataType['EMAIL'];
+  detail: DataType['SENTENCE|20'];
+}
+
+interface Product {
+  id: number;
+  title: string;
 }
 `;
 
