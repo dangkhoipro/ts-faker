@@ -1,15 +1,8 @@
 import { SOURCE_PATH } from "../config";
-import {
-  InterfaceTypeItem,
-  InterfaceMember,
-  MemberOtherDataType,
-  GeneratedType,
-} from "../types";
+import { InterfaceTypeItem, InterfaceMember, MemberOtherDataType, GeneratedType } from "../types";
 import { GeneratorLib } from ".";
 
-export const transform = async (
-  fileText: string
-): Promise<InterfaceTypeItem[]> => {
+export const transform = async (fileText: string): Promise<InterfaceTypeItem[]> => {
   const { Project } = await import("ts-morph");
 
   const project = new Project({
@@ -49,25 +42,23 @@ export const toSQL = (item: GeneratedType) => {
   return sql;
 };
 
+const generateDataMapper: Record<MemberOtherDataType, () => string> = {
+  [MemberOtherDataType.USER_NAME]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.FIRST_NAME]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.LAST_NAME]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.USER_NAME]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.FULL_NAME]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.PRICE]: () => GeneratorLib.userName(),
+  [MemberOtherDataType.DESCRIPTION]: () => GeneratorLib.userName(),
+};
+
 export const getOtherType = (member: InterfaceMember) => {
   const pattern = /^DataType\.(?<dataType>\w+)$/;
   const matchResult = member.type.match(pattern);
+
   if (!matchResult) return GeneratorLib.string();
+
   const dataType = matchResult.groups.dataType as MemberOtherDataType;
-  switch (dataType) {
-    case MemberOtherDataType.USER_NAME:
-      return GeneratorLib.userName();
-    case MemberOtherDataType.FIRST_NAME:
-      return GeneratorLib.firstName();
-    case MemberOtherDataType.LAST_NAME:
-      return GeneratorLib.lastName();
-    case MemberOtherDataType.FULL_NAME:
-      return GeneratorLib.fullName();
-    case MemberOtherDataType.PRICE:
-      return GeneratorLib.price();
-    case MemberOtherDataType.DESCRIPTION:
-      return GeneratorLib.sentence();
-    default:
-      return GeneratorLib.string();
-  }
+  const data = generateDataMapper[dataType]();
+  return data;
 };

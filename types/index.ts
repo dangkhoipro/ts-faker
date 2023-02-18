@@ -29,6 +29,8 @@ export enum MemberType {
   NUMBER = "number",
   BOOLEAN = "boolean",
   DATE = "Date",
+  ARRAY_STRING = "string[]",
+  ARRAY_NUMBER = "number[]",
 }
 
 export enum OutputFormat {

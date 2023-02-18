@@ -46,13 +46,13 @@ export default function Home() {
   };
 
   const renderHeaders = useCallback(
-    (data: unknown[]) =>
+    (data: GeneratedType['data']) =>
       Object.keys(data[0]).map((key, index) => (
         <th
           key={index}
-          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
         >
-          {key.toUpperCase()}
+          {key}
         </th>
       )),
     []
@@ -74,7 +74,7 @@ export default function Home() {
           <Select
             name="scale"
             label="Scale (Number Of Rows)"
-            options={[10, 100, 200]}
+            options={[1, 10, 100, 200]}
             value={options.scale}
             onChange={onSelectChange}
           />
@@ -108,6 +108,7 @@ export default function Home() {
                 <div className="mt-3 flex sm:mt-0 sm:ml-4">
                   <ActionButton
                     title="JSON"
+                    defaultOnClick={() => copyData(res.data, OutputFormat.JSON)}
                     items={[
                       { name: "Copy", onClick: () => copyData(res.data, OutputFormat.JSON) },
                       { name: "Download", onClick: () => downloadFile(res) },
@@ -120,21 +121,21 @@ export default function Home() {
                     ]} />
                 </div>
               </div>
-              <div className="shadow border-b border-gray-200 overflow-auto mb-5">
+              <div className="shadow border-b border-gray-200 overflow-auto mb-5 max-h-[400px]">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 sticky top-0">
                     <tr>{renderHeaders(res.data)}</tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {res.data.slice(0, 5).map((dt, i) => (
+                    {res.data.map((dt, i) => (
                       <tr key={i}>
                         {Object.values(dt).map((k, kIndex) => (
                           <td
                             key={kIndex}
-                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                            className="px-6 py-4 whitespace-nowrap text-sm"
                           >
                             <span className="">
-                              {truncate(k as string, 20)}
+                              {truncate(`${k}`, 20)}
                             </span>
                           </td>
                         ))}

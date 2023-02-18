@@ -4,13 +4,15 @@ import { ChevronDownIcon } from "@heroicons/react/solid"
 
 interface ActionButtonProps {
   title: string;
+  defaultOnClick?: () => void;
   items: { name: string; onClick?: (event: MouseEvent<HTMLAnchorElement>) => void; }[]
 }
 
-export const ActionButton = ({ title, items }: ActionButtonProps) => (
+export const ActionButton = ({ title, items, defaultOnClick }: ActionButtonProps) => (
   <span className="ml-2 relative z-0 inline-flex shadow-sm rounded-md">
     <button
       type="button"
+      onClick={defaultOnClick}
       className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
     >
       {title}
