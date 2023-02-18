@@ -35,10 +35,7 @@ export default function Home() {
     []
   );
 
-  const downloadSQLFile = useCallback(
-    (result: GeneratedType) => downloadObjectAsSQL(result),
-    []
-  );
+  const downloadSQLFile = useCallback((result: GeneratedType) => downloadObjectAsSQL(result), []);
 
   const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setResult([]);
@@ -46,7 +43,7 @@ export default function Home() {
   };
 
   const renderHeaders = useCallback(
-    (data: GeneratedType['data']) =>
+    (data: GeneratedType["data"]) =>
       Object.keys(data[0]).map((key, index) => (
         <th
           key={index}
@@ -61,16 +58,11 @@ export default function Home() {
   return (
     <div className="overflow-hidden flex flex-row">
       <div className="w-2/5">
-        <TextEditor
-          theme="vs-dark"
-          value={value}
-          height={"100vh"}
-          onChange={setValue}
-        />
+        <TextEditor theme="vs-dark" value={value} height={"100vh"} onChange={setValue} />
       </div>
       <div className="w-1/2 h-screen flex-1 overflow-y-auto">
         <SocialButtons />
-        <div className="flex justify-between mb-5 bg-gray-300 p-4">
+        <div className="flex space-x-6 mx-4 mt-2">
           <Select
             name="scale"
             label="Scale (Number Of Rows)"
@@ -78,32 +70,24 @@ export default function Home() {
             value={options.scale}
             onChange={onSelectChange}
           />
-          <Select
-            name="numberMax"
-            label="Integer Max Value"
-            options={[50, 100, 150]}
-            value={options.numberMax}
-            onChange={onSelectChange}
-          />
           <button
             disabled={loading}
             onClick={process}
-            className={`w-40 h-10 rounded-full bg-indigo-500 text-white transition self-end ${!loading && "hover:bg-indigo-800"
-              } focus:outline-none disabled:opacity-50`}
+            className={`w-40 h-10 rounded-lg bg-indigo-500 text-white transition self-end ${
+              !loading && "hover:bg-indigo-800"
+            } focus:outline-none disabled:opacity-50`}
           >
             Generate Data
           </button>
         </div>
-        <div className="p-5">
+        <div className="p-4">
           {loading && <Spinner className=" text-center" />}
           {result.map((res) => (
             <React.Fragment key={res.name}>
-              <div className="mb-5 pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
+              <div className="pb-4 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
                   {res.name}
-                  <span className="text-sm text-gray-500">
-                    (Number Of Rows: {options.scale})
-                  </span>
+                  <span className="text-sm text-gray-500"> (Number Of Rows: {options.scale})</span>
                 </h3>
                 <div className="mt-3 flex sm:mt-0 sm:ml-4">
                   <ActionButton
@@ -112,31 +96,28 @@ export default function Home() {
                     items={[
                       { name: "Copy", onClick: () => copyData(res.data, OutputFormat.JSON) },
                       { name: "Download", onClick: () => downloadFile(res) },
-                    ]} />
+                    ]}
+                  />
                   <ActionButton
                     title="SQL"
                     items={[
                       { name: "Copy", onClick: () => copyData(res, OutputFormat.SQL) },
                       { name: "Download", onClick: () => downloadSQLFile(res) },
-                    ]} />
+                    ]}
+                  />
                 </div>
               </div>
-              <div className="shadow border-b border-gray-200 overflow-auto mb-5 max-h-[400px]">
-                <table className="w-full">
+              <div className="overflow-auto mb-5 max-h-[400px]">
+                <table className="table-auto shadow">
                   <thead className="bg-gray-50 sticky top-0">
                     <tr>{renderHeaders(res.data)}</tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {res.data.map((dt, i) => (
-                      <tr key={i}>
+                      <tr key={i} className="even:bg-gray-100">
                         {Object.values(dt).map((k, kIndex) => (
-                          <td
-                            key={kIndex}
-                            className="px-6 py-4 whitespace-nowrap text-sm"
-                          >
-                            <span className="">
-                              {truncate(`${k}`, 20)}
-                            </span>
+                          <td key={kIndex} className="px-6 py-4 whitespace-nowrap text-sm">
+                            <span className="">{k}</span>
                           </td>
                         ))}
                       </tr>

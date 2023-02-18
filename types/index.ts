@@ -15,7 +15,7 @@ export interface GeneratedType {
 
 export type DataItem = Record<string, unknown>;
 
-export enum MemberOtherDataType {
+export enum MemberOtherData {
   USER_NAME = "USER_NAME",
   FIRST_NAME = "FIRST_NAME",
   FULL_NAME = "FULL_NAME",
@@ -23,6 +23,16 @@ export enum MemberOtherDataType {
   PRICE = "PRICE",
   DESCRIPTION = "DESCRIPTION",
 }
+
+type DataType = {
+  USER_NAME: string;
+  FIRST_NAME: string;
+  FULL_NAME: string;
+  LAST_NAME: string;
+  PRICE: string;
+  DESCRIPTION: string;
+  [x: string]: string;
+};
 
 export enum MemberType {
   STRING = "string",
@@ -37,3 +47,8 @@ export enum OutputFormat {
   SQL = "SQL",
   JSON = "JSON",
 }
+
+export const MyRegex = {
+  DataType: /^DataType\[['"](?<dataType>.*)['"]\]$/,
+  DynamicNumber: /^number\|(?<min>\d+)-?(?<max>\d+)?$/,
+} as const;

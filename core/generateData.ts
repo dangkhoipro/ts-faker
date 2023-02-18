@@ -1,16 +1,8 @@
-import { getOtherType, transform } from "../core";
-import { DataItem, GeneratedType, MemberType } from "../types";
 import { OPTIONS } from "../config";
-import { GeneratorLib } from ".";
-
-const primativeTypeToData: Record<MemberType, () => any> = {
-  [MemberType.BOOLEAN]: () => GeneratorLib.boolean(),
-  [MemberType.STRING]: () => GeneratorLib.string(),
-  [MemberType.NUMBER]: () => GeneratorLib.number(),
-  [MemberType.DATE]: () => GeneratorLib.datetime(),
-  [MemberType.ARRAY_STRING]: () => [...Array(3)].map((index) => GeneratorLib.string()),
-  [MemberType.ARRAY_NUMBER]: () => [...Array(3)].map((index) => GeneratorLib.number()),
-};
+import { transform } from "../core";
+import { DataItem, GeneratedType } from "../types";
+import { getCustomData } from "./getCustomData";
+import { getPrimitiveData, isPrimitiveType } from "./getPrimitiveData";
 
 export const generateMockData = async (
   source: string,
@@ -26,12 +18,13 @@ export const generateMockData = async (
       const row: DataItem = {};
       for (const member of itemMembers) {
         const memberType = member.type;
-        if (primativeTypeToData[memberType] != null) {
-          row[member.name] = primativeTypeToData[memberType]();
+
+        if (isPrimitiveType(memberType)) {
+          row[member.name] = getPrimitiveData(memberType);
           continue;
         }
 
-        row[member.name] = getOtherType(member);
+        row[member.name] = getCustomData(member);
       }
       generatedType.data.push(row);
     });

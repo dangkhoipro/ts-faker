@@ -1,5 +1,11 @@
 import { SOURCE_PATH } from "../config";
-import { InterfaceTypeItem, InterfaceMember, MemberOtherDataType, GeneratedType } from "../types";
+import {
+  InterfaceTypeItem,
+  InterfaceMember,
+  MemberOtherData,
+  GeneratedType,
+  MyRegex,
+} from "../types";
 import { GeneratorLib } from ".";
 
 export const transform = async (fileText: string): Promise<InterfaceTypeItem[]> => {
@@ -21,8 +27,8 @@ export const transform = async (fileText: string): Promise<InterfaceTypeItem[]> 
   const interfaces = sourceFile.getInterfaces().map((i) => ({
     itemName: i.compilerNode.name.getText(),
     members: i.getMembers().map((m) => ({
-      name: m.compilerNode.name.getText(),
-      type: m.compilerNode.type.getText(),
+      name: m.compilerNode.name!.getText(),
+      type: m.compilerNode.type!.getText(),
     })),
   }));
 
@@ -40,25 +46,4 @@ export const toSQL = (item: GeneratedType) => {
     )
     .join(",")}\n\n`;
   return sql;
-};
-
-const generateDataMapper: Record<MemberOtherDataType, () => string> = {
-  [MemberOtherDataType.USER_NAME]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.FIRST_NAME]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.LAST_NAME]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.USER_NAME]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.FULL_NAME]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.PRICE]: () => GeneratorLib.userName(),
-  [MemberOtherDataType.DESCRIPTION]: () => GeneratorLib.userName(),
-};
-
-export const getOtherType = (member: InterfaceMember) => {
-  const pattern = /^DataType\.(?<dataType>\w+)$/;
-  const matchResult = member.type.match(pattern);
-
-  if (!matchResult) return GeneratorLib.string();
-
-  const dataType = matchResult.groups.dataType as MemberOtherDataType;
-  const data = generateDataMapper[dataType]();
-  return data;
 };

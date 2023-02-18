@@ -12,34 +12,23 @@ interface MonacoProps {
 }
 
 export const SAMPLE_CODE = `/*
-      You can use some built-in data types:
-        - DataType.USER_NAME
-        - DataType.FIRST_NAME
-        - DataType.LAST_NAME
-        - DataType.PRICE
-        - DataType.DESCRIPTION
-*/\n
+You can use some built-in data types:
+  - DataType["USER_NAME"]
+  - DataType["FIRST_NAME"]
+  - DataType["LAST_NAME"]
+  - DataType["PRICE"]
+  - DataType["DESCRIPTION"]
+  - DataType['number|1-120'] (min?-max?)
+*/
+
 interface Person {
-  userName: DataType.USER_NAME;
-  firstName: DataType.FIRST_NAME;
-  lastName: DataType.LAST_NAME;
-  age: number;
-  bio: DataType.DESCRIPTION
+  userName: DataType['USER_NAME'];
+  firstName: DataType['FIRST_NAME'];
+  lastName: DataType['LAST_NAME'];
+  age: DataType['number|1-120'];
+  bio: DataType['DESCRIPTION'];
 }
-
-interface Product {
-  id: number;
-  title: string;
-  description: DataType.DESCRIPTION;
-  price: DataType.PRICE;
-  addedAt: Date;
-}
-
-interface Author {
-  id: number;
-  name: DataType.FIRST_NAME;
-  numberOfBooks: number;
-}`;
+`;
 
 export const Monaco: React.FC<MonacoProps> = ({
   language,
@@ -60,17 +49,16 @@ export const Monaco: React.FC<MonacoProps> = ({
       options={options}
       onChange={onChange}
       beforeMount={(monaco) => {
-        const dataType = `enum DataType {
-          USER_NAME,
-          FIRST_NAME,
-          LAST_NAME,
-          PRICE,
-          DESCRIPTION,
+        const dataType = `type DataType = {
+          USER_NAME: string;
+          FIRST_NAME: string;
+          FULL_NAME: string;
+          LAST_NAME: string;
+          PRICE: string;
+          DESCRIPTION: string;
+          [x: string]: string;
         }`;
-        monaco.languages.typescript.typescriptDefaults.addExtraLib(
-          dataType,
-          "dataType.ts"
-        );
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(dataType, "dataType.ts");
       }}
     />
   );

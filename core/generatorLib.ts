@@ -12,4 +12,5 @@ export const GeneratorLib = {
   fullName: faker.name.findName,
   price: faker.commerce.price,
   sentence: faker.lorem.sentence,
+  dynamicNumber: (option?: { min?: number; max?: number }) => faker.datatype.number(option),
 };
