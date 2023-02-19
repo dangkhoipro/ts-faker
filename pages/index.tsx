@@ -1,4 +1,5 @@
 import { ActionButton } from "@components/ActionButton";
+import { ResizableComponent } from "@components/ResizableComponent";
 import { Spinner } from "@components/Spinner";
 import dynamic from "next/dynamic";
 import React, { ChangeEvent, useCallback, useState } from "react";
@@ -55,14 +56,14 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden flex flex-row">
-      <div className="w-2/5">
+      <ResizableComponent className="w-2/5">
         <TextEditor
           theme="vs-dark"
           value={value}
-          height={"100vh"}
+          height={"100%"}
           onChange={(value) => setValue(value ?? "")}
         />
-      </div>
+      </ResizableComponent>
       <div className="w-1/2 h-screen flex-1 overflow-y-auto">
         <SocialButtons />
         <div className="flex space-x-6 mx-4 mt-2">
@@ -76,8 +77,8 @@ export default function Home() {
           <button
             disabled={loading}
             onClick={process}
-            className={`w-40 h-10 rounded-lg bg-indigo-500 text-white transition self-end ${
-              !loading && "hover:bg-indigo-800"
+            className={`w-40 h-10 rounded-lg bg-blue-600 text-white transition self-end ${
+              !loading && "hover:bg-blue-800"
             } focus:outline-none disabled:opacity-50`}
           >
             Generate Data

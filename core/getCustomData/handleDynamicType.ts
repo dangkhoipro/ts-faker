@@ -1,10 +1,9 @@
 import { GeneratorLib } from "..";
 import { MyRegex } from "../../types";
 
-const dynamicGetters = [getDynamicNumber, getDynamicSentence];
+const dynamicGetters = [getDynamicNumber, getDynamicSentence, getItemInArray];
 
 export function getDynamicData(input: string): any {
-  // dynamic number
   const dynamicGetter = dynamicGetters.find((getter) => getter(input));
 
   if (dynamicGetter != null) return dynamicGetter(input);
@@ -32,6 +31,18 @@ function getDynamicSentence(input: string) {
       ? parseInt(dynamicSentence.groups.length)
       : undefined;
     return GeneratorLib.sentence(length);
+  }
+
+  return undefined;
+}
+
+function getItemInArray(input: string) {
+  const itemInArray = input.match(MyRegex.ItemInArray);
+
+  if (itemInArray?.groups) {
+    const inputs = itemInArray.groups.inputs ? itemInArray.groups.inputs.split(",") : [];
+    const randomIndex = GeneratorLib.number({ min: 0, max: inputs.length - 1 });
+    return inputs[randomIndex];
   }
 
   return undefined;

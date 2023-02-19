@@ -2,8 +2,11 @@
 /* eslint-disable @next/next/no-img-element */
 export const SocialButtons = () => {
   return (
-    <div className="flex px-4 justify-between items-center border-b">
-      <h1 className="text-lg font-bold text-indigo-600">Generate Fake Data</h1>
+    <div className="flex px-4 py-2 justify-between items-center border-b">
+      <div>
+        <h1 className="text-lg font-bold text-blue-600">Generate Fake Data</h1>
+        <p className="text-gray-500 text-sm">Generate data from interfaces</p>
+      </div>
       <div className="h-12">
         <a className="inline-block h-4" href="https://github.com/SirwanAfifi/ts-faker">
           <img src="https://img.shields.io/github/stars/SirwanAfifi/ts-faker?style=social" alt="" />

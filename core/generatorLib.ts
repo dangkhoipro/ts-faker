@@ -15,4 +15,5 @@ export const GeneratorLib = {
   email: faker.internet.email,
   url: faker.internet.url,
   sentence: (wordCount?: number) => faker.lorem.sentence(wordCount),
+  uuid: faker.datatype.uuid,
 };

@@ -21,6 +21,9 @@ You can use some built-in data types:
   - DataType["EMAIL"]
   - DataType['number|1-120'] (min?-max?)
   - DataType['SENTENCE'] (?|length)
+  - DataType['AUTO_INCREMENT_NUMBER']
+  - DataType['UUID']
+  - DataType['Array|item1,item2,item3']
 */
 
 interface Person {
@@ -29,6 +32,7 @@ interface Person {
   lastName: DataType['LAST_NAME'];
   age: DataType['number|1-120'];
   dob: Date;
+  sex: DataType['Array|male,female']
   profileUrl: DataType['URL'];
   email: DataType['EMAIL'];
   detail: DataType['SENTENCE|20'];
@@ -60,14 +64,19 @@ export const Monaco: React.FC<MonacoProps> = ({
       onChange={onChange}
       beforeMount={(monaco) => {
         const dataType = `type DataType = {
+          [x: string]: string;
           USER_NAME: string;
           FIRST_NAME: string;
           FULL_NAME: string;
           LAST_NAME: string;
           PRICE: string;
           DESCRIPTION: string;
-          [x: string]: string;
-        }`;
+          EMAIL: string;
+          URL: string;
+          SENTENCE: string;
+          AUTO_INCREMENT_NUMBER: string;
+          UUID: string;
+        };`;
         monaco.languages.typescript.typescriptDefaults.addExtraLib(dataType, "dataType.ts");
       }}
     />

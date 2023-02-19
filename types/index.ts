@@ -24,6 +24,8 @@ export enum ECustomData {
   EMAIL = "EMAIL",
   URL = "URL",
   SENTENCE = "SENTENCE",
+  AUTO_INCREMENT_NUMBER = "AUTO_INCREMENT_NUMBER",
+  UUID = "UUID",
 }
 
 type DataType = {
@@ -33,10 +35,11 @@ type DataType = {
   FULL_NAME: string;
   LAST_NAME: string;
   PRICE: string;
-  DESCRIPTION: string;
   EMAIL: string;
   URL: string;
   SENTENCE: string;
+  AUTO_INCREMENT_NUMBER: string;
+  UUID: string;
 };
 
 export enum MemberType {
@@ -57,4 +60,5 @@ export const MyRegex = {
   DataType: /^DataType\[['"](?<dataType>.*)['"]\]$/,
   DynamicNumber: /^number\|(?<min>\d+)-?(?<max>\d+)?$/,
   DynamicSentence: /^SENTENCE\|?(?<length>\d+)?$/,
+  ItemInArray: /^Array\|?(?<inputs>.+)?$/,
 } as const;
