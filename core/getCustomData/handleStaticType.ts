@@ -1,27 +1,27 @@
-import { ECustomData } from "../../types";
+import { CustomData, TCustomData } from "../../types";
 import { GeneratorLib } from "../generatorLib";
 
 let autoIncrementNumber = 1;
 
-const generateStaticDataMapper: Record<ECustomData, () => string | number> = {
-  [ECustomData.USER_NAME]: () => GeneratorLib.userName(),
-  [ECustomData.FIRST_NAME]: () => GeneratorLib.firstName(),
-  [ECustomData.LAST_NAME]: () => GeneratorLib.lastName(),
-  [ECustomData.FULL_NAME]: () => GeneratorLib.fullName(),
-  [ECustomData.PRICE]: () => GeneratorLib.price(),
-  [ECustomData.EMAIL]: () => GeneratorLib.email(),
-  [ECustomData.URL]: () => GeneratorLib.url(),
-  [ECustomData.SENTENCE]: () => GeneratorLib.sentence(),
-  [ECustomData.AUTO_INCREMENT_NUMBER]: () => autoIncrementNumber++,
-  [ECustomData.UUID]: () => GeneratorLib.uuid(),
+const generateStaticDataMapper: Record<TCustomData, () => string | number> = {
+  USER_NAME: () => GeneratorLib.userName(),
+  FIRST_NAME: () => GeneratorLib.firstName(),
+  LAST_NAME: () => GeneratorLib.lastName(),
+  FULL_NAME: () => GeneratorLib.fullName(),
+  PRICE: () => GeneratorLib.price(),
+  EMAIL: () => GeneratorLib.email(),
+  URL: () => GeneratorLib.url(),
+  SENTENCE: () => GeneratorLib.sentence(),
+  AUTO_INCREMENT_NUMBER: () => autoIncrementNumber++,
+  UUID: () => GeneratorLib.uuid(),
 };
 
-export function isStaticType(input: string): input is ECustomData {
-  const keys = Object.keys(ECustomData);
+export function isStaticType(input: string): input is keyof typeof CustomData {
+  const keys = Object.keys(CustomData);
 
   return keys.includes(input);
 }
 
-export function getStaticData(input: ECustomData) {
+export function getStaticData(input: TCustomData) {
   return generateStaticDataMapper[input]();
 }

@@ -1,4 +1,4 @@
-import { InterfaceMember, ECustomData, MyRegex } from "../../types";
+import { InterfaceMember, CustomData, MyRegex } from "../../types";
 import { GeneratorLib } from "../generatorLib";
 import { getDynamicData } from "./handleDynamicType";
 import { getStaticData, isStaticType } from "./handleStaticType";

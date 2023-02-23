@@ -64,20 +64,30 @@ export const Monaco: React.FC<MonacoProps> = ({
       options={options}
       onChange={onChange}
       beforeMount={(monaco) => {
-        const dataType = `enum ECustomData {
-          USER_NAME = "USER_NAME",
-          FIRST_NAME = "FIRST_NAME",
-          FULL_NAME = "FULL_NAME",
-          LAST_NAME = "LAST_NAME",
-          PRICE = "PRICE",
-          EMAIL = "EMAIL",
-          URL = "URL",
-          SENTENCE = "SENTENCE",
-          AUTO_INCREMENT_NUMBER = "AUTO_INCREMENT_NUMBER",
-          UUID = "UUID",
+        const dataType = `
+        function strEnum<T extends string>(o: Array<T>): { [K in T]: K } {
+          return o.reduce((res, key) => {
+            res[key] = key;
+            return res;
+          }, Object.create(null));
         }
+
+        const CustomData = strEnum([
+          "USER_NAME",
+          "FIRST_NAME",
+          "FULL_NAME",
+          "LAST_NAME",
+          "PRICE",
+          "EMAIL",
+          "URL",
+          "SENTENCE",
+          "AUTO_INCREMENT_NUMBER",
+          "UUID",
+        ]);
         
-        type DataType = Record<ECustomData, string> & {
+        type TCustomData = keyof typeof CustomData;
+        
+        type DataType = Record<TCustomData, string> & {
           dynamic: {
             [dynamicType: string]: string;
           };

@@ -1,6 +1,5 @@
 import { SOURCE_PATH } from "../config";
-import { InterfaceTypeItem, InterfaceMember, ECustomData, GeneratedType, MyRegex } from "../types";
-import { GeneratorLib } from ".";
+import { GeneratedType, InterfaceTypeItem } from "../types";
 
 export const transform = async (fileText: string): Promise<InterfaceTypeItem[]> => {
   const { Project } = await import("ts-morph");

@@ -1,3 +1,5 @@
+import { strEnum } from "@utils/index";
+
 export interface InterfaceMember {
   name: string;
   type: string;
@@ -15,26 +17,28 @@ export interface GeneratedType {
 
 export type DataItem = Record<string, unknown>;
 
-export enum ECustomData {
-  USER_NAME = "USER_NAME",
-  FIRST_NAME = "FIRST_NAME",
-  FULL_NAME = "FULL_NAME",
-  LAST_NAME = "LAST_NAME",
-  PRICE = "PRICE",
-  EMAIL = "EMAIL",
-  URL = "URL",
-  SENTENCE = "SENTENCE",
-  AUTO_INCREMENT_NUMBER = "AUTO_INCREMENT_NUMBER",
-  UUID = "UUID",
-}
+export const CustomData = strEnum([
+  "USER_NAME",
+  "FIRST_NAME",
+  "FULL_NAME",
+  "LAST_NAME",
+  "PRICE",
+  "EMAIL",
+  "URL",
+  "SENTENCE",
+  "AUTO_INCREMENT_NUMBER",
+  "UUID",
+]);
 
-type DataType = Record<ECustomData, string> & {
+export type TCustomData = keyof typeof CustomData;
+
+type DataType = Record<TCustomData, string> & {
   dynamic: {
     [dynamicType: string]: string;
   };
 };
 
-export enum MemberType {
+export enum PrimitiveType {
   STRING = "string",
   NUMBER = "number",
   BOOLEAN = "boolean",
