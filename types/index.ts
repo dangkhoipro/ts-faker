@@ -28,18 +28,10 @@ export enum ECustomData {
   UUID = "UUID",
 }
 
-type DataType = {
-  [x: string]: string;
-  USER_NAME: string;
-  FIRST_NAME: string;
-  FULL_NAME: string;
-  LAST_NAME: string;
-  PRICE: string;
-  EMAIL: string;
-  URL: string;
-  SENTENCE: string;
-  AUTO_INCREMENT_NUMBER: string;
-  UUID: string;
+type DataType = Record<ECustomData, string> & {
+  dynamic: {
+    [dynamicType: string]: string;
+  };
 };
 
 export enum MemberType {
@@ -57,7 +49,7 @@ export enum OutputFormat {
 }
 
 export const MyRegex = {
-  DataType: /^DataType\[['"](?<dataType>.*)['"]\]$/,
+  DataType: /^DataType\[['"]dynamic['"]\]\[['"](?<dataType>.*)['"]\]$/,
   DynamicNumber: /^number\|(?<min>\d+)-?(?<max>\d+)?$/,
   DynamicSentence: /^SENTENCE\|?(?<length>\d+)?$/,
   ItemInArray: /^Array\|?(?<inputs>.+)?$/,

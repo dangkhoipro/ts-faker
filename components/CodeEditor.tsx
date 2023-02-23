@@ -19,23 +19,24 @@ You can use some built-in data types:
   - DataType["PRICE"]
   - DataType["URL"]
   - DataType["EMAIL"]
-  - DataType['number|1-120'] (min?-max?)
-  - DataType['SENTENCE'] (?|length)
+  - DataType['dynamic']['number|1-120'] (min?-max?)
+  - DataType['SENTENCE']
+  - DataType['dynamic']['SENTENCE|20'] (20 words)
   - DataType['AUTO_INCREMENT_NUMBER']
   - DataType['UUID']
-  - DataType['Array|item1,item2,item3']
+  - DataType['dynamic']['Array|item1,item2,item3']
 */
 
 interface Person {
   userName: DataType['USER_NAME'];
   firstName: DataType['FIRST_NAME'];
   lastName: DataType['LAST_NAME'];
-  age: DataType['number|1-120'];
+  age: DataType['dynamic']['number|1-120'];
   dob: Date;
-  sex: DataType['Array|male,female']
+  sex: DataType['dynamic']['Array|male,female']
   profileUrl: DataType['URL'];
   email: DataType['EMAIL'];
-  detail: DataType['SENTENCE|20'];
+  detail: DataType['dynamic']['SENTENCE|20'];
 }
 
 interface Product {
@@ -63,19 +64,23 @@ export const Monaco: React.FC<MonacoProps> = ({
       options={options}
       onChange={onChange}
       beforeMount={(monaco) => {
-        const dataType = `type DataType = {
-          [x: string]: string;
-          USER_NAME: string;
-          FIRST_NAME: string;
-          FULL_NAME: string;
-          LAST_NAME: string;
-          PRICE: string;
-          DESCRIPTION: string;
-          EMAIL: string;
-          URL: string;
-          SENTENCE: string;
-          AUTO_INCREMENT_NUMBER: string;
-          UUID: string;
+        const dataType = `enum ECustomData {
+          USER_NAME = "USER_NAME",
+          FIRST_NAME = "FIRST_NAME",
+          FULL_NAME = "FULL_NAME",
+          LAST_NAME = "LAST_NAME",
+          PRICE = "PRICE",
+          EMAIL = "EMAIL",
+          URL = "URL",
+          SENTENCE = "SENTENCE",
+          AUTO_INCREMENT_NUMBER = "AUTO_INCREMENT_NUMBER",
+          UUID = "UUID",
+        }
+        
+        type DataType = Record<ECustomData, string> & {
+          dynamic: {
+            [dynamicType: string]: string;
+          };
         };`;
         monaco.languages.typescript.typescriptDefaults.addExtraLib(dataType, "dataType.ts");
       }}
